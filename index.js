@@ -6,36 +6,40 @@ const express = require('express')
 //opret en variabel til express serveren
 const app = express()
 //definer en port
-const port = 4040
+const port = 6969
 //vi laver en meget simpel database 
-const weekDays = {
-    'mandag': 'Jeg har det... mandag.. det er sådan.. nedadgående',
-    'tirsdag': 'Jeg har det godt, det er tirsdag',
-    'onsdag': 'Jeg har det... onsdag, den kan god være svær',
-    'torsdag': 'Torsdag - det er en dejlig dag. Jeg har det fedt',
-    'fredag': 'Ubeskrivelig glad, er jeg',
-    'lørdag': 'Jeg har det roligt, trækker vejret, fuld af LOVE',
-    'søndag': 'Jeg har det okay, det er søndag. Jeg er veludhvilet. Eller.',
-}
 
 //serve en statisk mappe i roden 
 app.use('/', express.static('public'))
 
+// app.get('/', (req,res) =>{
+//     console.log('besøg i roden')
+// } )
 
-//start en webserver på port 3000
-app.get('/api/*', (req, res)=>{
-    console.log('Serveren fik besøg i roden')
-    if(req.params[0]){
-        console.log('WOW nogen vil bruge vores api: ' + req.params[0])
-        if(weekDays[req.params[0]]){
-            res.send(weekDays[req.params[0]])
-        }else{
-            res.send(req.params[0] + 'is NOT an api endpoint')
+
+// Hvis der kommer klienter der  
+app.get('/api/naturkrafter', (req, res)=>{
+    const obj1 ={
+        'tyngdekraft':{
+            'Effects': 'all particles with mass',
+            'Force carrier particle': 'graviton (Not yet detected)'
         }
-    }else{
-        res.send('Du besøgte mig da - i min rod')
     }
+    res.json(obj1)
+    
 })
+app.get('/api/begreber', (req, res)=>{
+    const obj2 ={
+        'Hilbert-rummet': '9/10',
+        'Lorentz transformations': '5/10',
+        'Maxwell equations':'6/10',
+        'Bells inequality':'7.5/10'
+    }
+    res.json(obj2)
+    // res.send('Du er kommet til hval-API\'et')
+})
+
+
 app.listen(port, ()=>{
     console.log('Server lytter på port: ' + port)
 }) 
